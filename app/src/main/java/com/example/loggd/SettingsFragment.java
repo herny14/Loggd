@@ -116,7 +116,7 @@ public class SettingsFragment extends Fragment {
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 5);
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.HOUR, 6);
         calendar.set(Calendar.AM_PM, Calendar.AM);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
