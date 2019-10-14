@@ -1,6 +1,8 @@
 package com.example.loggd;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,10 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Calendar;
+
+import static android.content.Context.ALARM_SERVICE;
 
 
 /**
@@ -82,12 +88,13 @@ public class SettingsFragment extends Fragment {
         reminder.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(sReminder.isEnabled()){
-                    Toast.makeText(getActivity().getApplicationContext(), "OPENING REMINDER MENU!", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getActivity(), Reminderv2.class);
-                    startActivity(i);
+                if(sReminder.isChecked()){
+                    //Intent i = new Intent(getContext(), Reminderv2.class);
+                    //startActivity(i);
+                    alarmMethod();
+                    Toast.makeText(getActivity().getApplicationContext(), "Starting Alarm!", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getActivity().getApplicationContext(), "CAN'T OPEN REMINDER MENU! ENABLE NOTIFICATIONS!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "CAN'T OPEN! PLEASE ENABLE REMINDER!", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -100,5 +107,22 @@ public class SettingsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_settings, container, false);
         */
         return v;
+    }
+    private PendingIntent pendingIntent;
+    private void alarmMethod(){
+        Intent myIntent = new Intent(getActivity().getApplicationContext(), NotifyActivity.class);
+        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(ALARM_SERVICE);
+        pendingIntent = PendingIntent.getService(getActivity().getApplicationContext(), 0, myIntent, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 5);
+        calendar.set(Calendar.HOUR, 6);
+        calendar.set(Calendar.AM_PM, Calendar.AM);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000 * 60 * 60 * 24, pendingIntent);
+
+        Toast.makeText(getActivity().getApplicationContext(), "Alarm starting at 6 AM Everyday!", Toast.LENGTH_SHORT).show();
     }
 }
