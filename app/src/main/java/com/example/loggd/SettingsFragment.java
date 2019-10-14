@@ -1,6 +1,7 @@
 package com.example.loggd;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class SettingsFragment extends Fragment {
 
 
     Switch sNotification, sLocation, sReminder;
+    TextView reminder;
 
 
     @Override
@@ -39,22 +41,55 @@ public class SettingsFragment extends Fragment {
         sNotification = (Switch)v.findViewById(R.id.switchNotification);
         sLocation = (Switch)v.findViewById(R.id.switchLocation);
         sReminder = (Switch)v.findViewById(R.id.switchReminder);
-       /*
-        btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Toast.makeText(getActivity().getApplicationContext(), "Ticked!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        sReminder.setEnabled(false);
+        reminder = (TextView)v.findViewById(R.id.tvReminder);
 
-        */
         sNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 if(((Switch)v).isChecked()){
-                    Toast.makeText(getActivity().getApplicationContext(), "NOTIF ON!", Toast.LENGTH_SHORT).show();
-                }else
-                    Toast.makeText(getActivity().getApplicationContext(), "NOTIF OFF!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Notification ON!", Toast.LENGTH_SHORT).show();
+                    sReminder.setEnabled(true);
+                }else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Notification OFF!", Toast.LENGTH_SHORT).show();
+                    sReminder.setEnabled(false);
+                }
+            }
+        });
+
+        sLocation.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(((Switch)v).isChecked()){
+                    Toast.makeText(getActivity().getApplicationContext(), "Location Services ON!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Location Services OFF!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        sReminder.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(((Switch)v).isChecked()){
+                    Toast.makeText(getActivity().getApplicationContext(), "Reminder ON!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Reminder OFF!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        reminder.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(sReminder.isEnabled()){
+                    Toast.makeText(getActivity().getApplicationContext(), "OPENING REMINDER MENU!", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getActivity(), Reminderv2.class);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(), "CAN'T OPEN REMINDER MENU! ENABLE NOTIFICATIONS!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
