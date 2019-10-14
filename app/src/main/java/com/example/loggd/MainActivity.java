@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mTextMessage;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -18,28 +17,30 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment;
-            ActionBar actionBar = getSupportActionBar();
             switch (item.getItemId()) {
-
                 case R.id.navigation_home:
                     fragment = new HomeFragment();
-                    fragment.getFragmentManager().beginTransaction().replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName()).commit();
+                    ActionBar actionBar = getSupportActionBar();
                     actionBar.setTitle("Home");
                     return true;
                 case R.id.navigation_bookmark:
                     fragment = new BookmarkFragment();
-                    fragment.getFragmentManager().beginTransaction().replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName()).commit();
-                    actionBar.setTitle("Bookmark");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container_layout,fragment,fragment.getClass().getSimpleName()).commit();
+                    ActionBar actionBar1 = getSupportActionBar();
+                    actionBar1.setTitle("Bookmark");
                     return true;
                 case R.id.navigation_history:
                     fragment = new HistoryFragment();
-                    fragment.getFragmentManager().beginTransaction().replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName()).commit();
-                    actionBar.setTitle("History");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container_layout,fragment,fragment.getClass().getSimpleName()).commit();
+                    ActionBar actionBar2 = getSupportActionBar();
+                    actionBar2.setTitle("History");
                     return true;
                 case R.id.navigation_settings:
                     fragment = new SettingsFragment();
-                    fragment.getFragmentManager().beginTransaction().replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName()).commit();
-                    actionBar.setTitle("Settings");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container_layout,fragment,fragment.getClass().getSimpleName()).commit();
+                    ActionBar actionBar3 = getSupportActionBar();
+                    actionBar3.setTitle("Settings");
                     return true;
             }
             return false;
@@ -51,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        if(savedInstanceState == null){
+            navView.setSelectedItemId(R.id.navigation_home);
+        }
     }
 
 }
