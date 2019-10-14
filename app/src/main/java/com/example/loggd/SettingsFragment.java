@@ -31,8 +31,7 @@ public class SettingsFragment extends Fragment {
 
 
     Switch sNotification, sLocation, sReminder;
-    TextView tV;
-    Button btn;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,21 +39,22 @@ public class SettingsFragment extends Fragment {
         sNotification = (Switch)v.findViewById(R.id.switchNotification);
         sLocation = (Switch)v.findViewById(R.id.switchLocation);
         sReminder = (Switch)v.findViewById(R.id.switchReminder);
-        tV = (TextView)v.findViewById(R.id.textView7);
-        btn = (Button)v.findViewById(R.id.button);
+       /*
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Toast.makeText(getActivity().getApplicationContext(), "Ticked!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        */
         sNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 if(((Switch)v).isChecked()){
-                    tV.setText("Notif is checked!");
+                    Toast.makeText(getActivity().getApplicationContext(), "NOTIF ON!", Toast.LENGTH_SHORT).show();
                 }else
-                    tV.setText("Notif is not chekced!");
+                    Toast.makeText(getActivity().getApplicationContext(), "NOTIF OFF!", Toast.LENGTH_SHORT).show();
             }
         });
 
